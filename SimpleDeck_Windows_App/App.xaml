@@ -1,0 +1,36 @@
+﻿<Application x:Class="SimpleDeck_Windows_App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModel="clr-namespace:SimpleDeck_Windows_App.ViewModel"
+             xmlns:view="clr-namespace:SimpleDeck_Windows_App.View"
+             xmlns:local="clr-namespace:SimpleDeck_Windows_App"
+             StartupUri="MainWindow.xaml"
+             
+             
+             >
+    <Application.Resources>
+         <ResourceDictionary>
+             <ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="Styles/MenuButtonTheme.xaml"/>
+                 <ResourceDictionary Source="Styles/TextBoxTheme.xaml"/>
+             </ResourceDictionary.MergedDictionaries>
+             
+             <DataTemplate DataType="{x:Type viewModel:ConnectionVM}">
+                 <view:ConnectionPanel/>
+             </DataTemplate>
+             
+             <DataTemplate DataType="{x:Type viewModel:BindingsVM}">
+                 <view:BindingsPanel/>
+             </DataTemplate>
+             
+             <DataTemplate DataType="{x:Type viewModel:SettingsVM}">
+                 <view:SettingsPanel/>
+             </DataTemplate>
+             
+             <DataTemplate DataType="{x:Type viewModel:AboutVM}">
+                 <view:AboutPanel/>
+             </DataTemplate>
+             
+         </ResourceDictionary>
+    </Application.Resources>
+</Application>
