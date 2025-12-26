@@ -1,0 +1,36 @@
+﻿# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio / Rider user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.idea/.idea.*/.idea/workspace.xml
+.idea/.idea.*/.idea/tasks.xml
+.idea/.idea.*/.idea/usage.statistics.xml
+.idea/.idea.*/.idea/shelf/
+.idea/.idea.*/.idea/contentModel.xml
+.idea/.idea.*/.idea/modules.xml
+
+# NuGet package restore
+project.lock.json
+project.fragment.lock.json
+artifacts/
+**/project.assets.json
+**/project.packagespec.json
+*.nuget.props
+*.nuget.targets
+*.nuget.dgspec.json
+project.nuget.cache
+rider.project.restore.info
+rider.project.model.nuget.info
+
+# Temporary files
+*.tmp
+*.log
+*.cache
+
+SimpleDeck_Software.sln.DotSettings.user
