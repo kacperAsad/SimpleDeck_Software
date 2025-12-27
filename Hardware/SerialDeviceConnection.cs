@@ -8,26 +8,37 @@ using Hardware.Interfaces;
 
 namespace Hardware;
 
-public class SerialDeviceConnection(
-    IUsbDeviceLocator deviceLocator,
-    IDeviceProtocolParser parser)
+public class SerialDeviceConnection
     : IDeviceConnection
 {
     public event EventHandler<DeviceMessage>? DeviceMessageReceived;
     public bool IsConnected => _serialPort?.IsOpen ?? false;
+    
+    private readonly IUsbDeviceLocator deviceLocator;
+    private readonly IDeviceProtocolParser parser;
 
     private SerialPort? _serialPort;
     private readonly StringBuilder _buffer = new();
+
 
     private readonly string __vid = "0483";
     private readonly string __pid = "5740"; // TODO Trzeba tu machąć jakieś wczytywanie albo coś
 
 
+    public SerialDeviceConnection(IUsbDeviceLocator deviceLocator, IDeviceProtocolParser parser)
+    {
+        this.deviceLocator = deviceLocator; 
+        this.parser = parser;
+  
+    }
+    
+
     private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
     {
+        if (!IsConnected) return;
         try
         {
-            var data = _serialPort.ReadExisting();
+            var data = _serialPort?.ReadExisting();
             _buffer.Append(data);
 
             while (TryReadLine(out var line))
@@ -76,12 +87,14 @@ public class SerialDeviceConnection(
         };
         
         _serialPort.DataReceived += OnDataReceived;
+        _serialPort.ErrorReceived += OnErrorReceived;
         
         _serialPort.Open();
-        
         return Task.CompletedTask;
     }
+
     
+
     public Task DisconnectAsync()
     {
         _serialPort?.DataReceived -= OnDataReceived;
@@ -99,6 +112,18 @@ public class SerialDeviceConnection(
         });
     }
 
+    
+    
+    private void OnErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+    {
+        if (e.EventType is SerialError.RXOver or SerialError.Frame)
+        {
+            DisconnectAsync();
+        }
+    }
+    
+    
+    
     public void Dispose()
     {
         if (_serialPort is { IsOpen: true })
@@ -109,4 +134,9 @@ public class SerialDeviceConnection(
         _serialPort?.Dispose();
         _buffer.Clear();
     }
+    
+    
+    
+    
+    
 }

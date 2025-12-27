@@ -4,11 +4,17 @@ using Core.Input;
 using Core.Interfaces;
 using Core.Routing;
 using Hardware;
+using Hardware.Implementations;
+using Hardware.Interfaces;
 using Infrastructure;
 
 
 class Program
 {
+    const string VID = "0483";
+    const string PID = "5740";
+    
+    
     static async Task Main(string[] args)
     {
         var configProvider = new FileConfigProvider("SimpleDeck");
@@ -24,9 +30,13 @@ class Program
 
         IDeviceConnection device = new SerialDeviceConnection(new UsbDeviceComLocatorWindows(), new SimpleDeckV1Parser());
 
-        // Opakowujemy WindowsAudioService w SmoothAudioService dla płynnych przejść
-        var windowsAudio = new WindowsAudioService();
-        var audio = new SmoothAudioService(windowsAudio);
+        IUsbDeviceWatcher usbDeviceWatcher = new UsbDeviceWatcher(VID, PID);
+
+        DeviceConnectionManager manager = new DeviceConnectionManager(usbDeviceWatcher, device);
+        
+        manager.Start();
+        
+        var audio = new WindowsAudioService();
         var router = new InputRouter(audio, enrichedMappings);
 
         device.DeviceMessageReceived += (s, msg) =>
