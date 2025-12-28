@@ -10,5 +10,5 @@ public enum ActionType
     OpenApp,
     MuteApp,
     MuteMicrophone,
-    
+    KeyboardShortcut,
 }

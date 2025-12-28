@@ -24,12 +24,13 @@ class Program
 
         var audio = new WindowsAudioService();
         IMediaService mediaService = new MediaKeysHelper();
+        IKeyboardSimulator keyboardSimulator = new WindowsKeyboardSimulator();
 
         var runtimeMappings = config.Mappings
             .Select(ControlMappingFactory.Create)
             .ToList();
         var runtimeButtonActions = config.Buttons
-            .Select(x => ButtonMappingRuntimeFactory.Create(x, mediaService, audio))
+            .Select(x => ButtonMappingRuntimeFactory.Create(x, mediaService, audio, keyboardSimulator))
             .ToList();
         
         var router = new InputRouter(audio, runtimeMappings, runtimeButtonActions);

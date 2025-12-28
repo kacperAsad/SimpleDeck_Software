@@ -7,7 +7,7 @@ namespace Infrastructure;
 
 public static class ActionFactory
 {
-    public static IAction Create(ActionConfig actionConfig, IMediaService mediaService, IAudioService audioService)
+    public static IAction Create(ActionConfig actionConfig, IMediaService mediaService, IAudioService audioService, IKeyboardSimulator keyboardSimulator)
     {
         return actionConfig.Type switch
         {
@@ -18,6 +18,7 @@ public static class ActionFactory
             ActionType.OpenApp => new SystemOpenAppAction(actionConfig),
             ActionType.MuteApp => new MediaMuteAppAction(actionConfig, audioService),
             ActionType.MuteMicrophone => new MuteGlobalMicrophoneAction(audioService),
+            ActionType.KeyboardShortcut => new KeyboardShortcutAction(keyboardSimulator, actionConfig),
             
             _ => throw new NotSupportedException(actionConfig.Type.ToString())
         };
