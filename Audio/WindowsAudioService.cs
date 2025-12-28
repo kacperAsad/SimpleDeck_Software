@@ -52,4 +52,41 @@ public class WindowsAudioService : IAudioService
     {
         return _device.AudioEndpointVolume.MasterVolumeLevelScalar;
     }
+
+    public void ToggleApplicationMute(string processName, bool? mute = null)
+    {
+        var sessions = _device.AudioSessionManager.Sessions;
+
+        for (int i = 0; i < sessions.Count; i++)
+        {
+            var session = sessions[i];
+            var pid = session.GetProcessID;
+
+            try
+            {
+                var process = session.GetProcessID != 0 
+                    ? System.Diagnostics.Process.GetProcessById((int)session.GetProcessID) 
+                    : null;
+                
+                // Sprawdzamy czy nazwa procesu pasuje (np. "Spotify", "Chrome")
+                if (process == null ||
+                    !process.ProcessName.Equals(processName, StringComparison.OrdinalIgnoreCase)) continue;
+                if (mute == null)
+                {
+                    bool isMuted = session.SimpleAudioVolume.Mute;
+                    session.SimpleAudioVolume.Mute = !isMuted;
+                }
+                else
+                {
+                    session.SimpleAudioVolume.Mute = mute.Value;
+                }
+                return;
+                
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+    }
 }

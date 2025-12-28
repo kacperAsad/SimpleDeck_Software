@@ -6,4 +6,6 @@ public interface IAudioService
     void SetMasterVolume(float volume);
     
     float GetMasterVolume();
+
+    void ToggleApplicationMute(string processName, bool? mute = null);
 }

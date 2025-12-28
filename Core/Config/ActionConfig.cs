@@ -1,7 +1,10 @@
-﻿namespace Core.Config;
+﻿using System.Text.Json.Serialization;
+
+namespace Core.Config;
 
 public class ActionConfig
 {
-    public string Type { get; set; } = "";
+    [JsonConverter(typeof(JsonStringEnumConverter<ActionType>))]
+    public ActionType Type { get; set; } = ActionType.Unknown;
     public Dictionary<string, string> Parameters { get; set; } = new();
 }

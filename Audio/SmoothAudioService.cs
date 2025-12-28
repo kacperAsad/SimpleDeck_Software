@@ -68,6 +68,11 @@ public class SmoothAudioService : IAudioService, IDisposable
         return _inner.GetMasterVolume();
     }
 
+    public void ToggleApplicationMute(string processName, bool? mute = null)
+    {
+        throw  new NotImplementedException();
+    }
+
     private void Update(object? state)
     {
         lock (_lock)

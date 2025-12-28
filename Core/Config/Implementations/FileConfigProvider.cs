@@ -94,7 +94,7 @@ public class FileConfigProvider : IConfigProvider
                     ControlId = "BTN1",
                     Action = new ActionConfig()
                     {
-                        Type = "Play_Pause_Action",
+                        Type = ActionType.PlayPause,
                         Parameters =  new Dictionary<string, string>()
                     }
                 },
@@ -103,7 +103,7 @@ public class FileConfigProvider : IConfigProvider
                     ControlId = "BTN2",
                     Action = new ActionConfig()
                     {
-                        Type = "Previous_Action",
+                        Type = ActionType.PreviousTrack,
                         Parameters =  new Dictionary<string, string>()
                     }
                 },
@@ -112,7 +112,7 @@ public class FileConfigProvider : IConfigProvider
                     ControlId = "BTN3",
                     Action = new ActionConfig()
                     {
-                        Type = "Next_Action",
+                        Type = ActionType.NextTrack,
                         Parameters =  new Dictionary<string, string>()
                     }
                     
@@ -122,7 +122,7 @@ public class FileConfigProvider : IConfigProvider
                     ControlId = "BTN4",
                     Action = new ActionConfig()
                     {
-                        Type = "Open_App_Action",
+                        Type = ActionType.OpenApp,
                         Parameters =  new Dictionary<string, string>()
                         {
                             { "path", "calc.exe" }

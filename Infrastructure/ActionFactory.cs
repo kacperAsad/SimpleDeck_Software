@@ -1,4 +1,5 @@
-﻿using Core.Actions;
+﻿using Core;
+using Core.Actions;
 using Core.Config;
 using Core.Interfaces;
 
@@ -10,11 +11,11 @@ public static class ActionFactory
     {
         return actionConfig.Type switch
         {
-            "Play_Pause_Action" => new MediaPlayPauseAction(mediaService),
-            "Previous_Action" => new MediaPreviousAction(mediaService),
-            "Next_Action" => new MediaNextAction(mediaService),
-            "Open_App_Action" => new SystemOpenAppAction(actionConfig),
-            _ => throw new NotSupportedException(actionConfig.Type)
+            ActionType.PlayPause => new MediaPlayPauseAction(mediaService),
+            ActionType.PreviousTrack => new MediaPreviousAction(mediaService),
+            ActionType.NextTrack => new MediaNextAction(mediaService),
+            ActionType.OpenApp => new SystemOpenAppAction(actionConfig),
+            _ => throw new NotSupportedException(actionConfig.Type.ToString())
         };
     }
 }
