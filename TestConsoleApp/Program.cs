@@ -1,4 +1,5 @@
 ﻿using Audio;
+using Core.Actions;
 using Core.Config.Implementations;
 using Core.Input;
 using Core.Interfaces;
@@ -17,15 +18,17 @@ class Program
     
     static async Task Main(string[] args)
     {
-        var configProvider = new FileConfigProvider("SimpleDeck");
+        var configProvider = new FileConfigProvider("SimpleDeck", "config.json");
+        configProvider.Init();
         var config = configProvider.Load();
 
+        IMediaService mediaService = new MediaKeysHelper();
         // TUTAJ: Wzbogać mappings o AudioCurve obiekty
         var runtimeMappings = config.Mappings
             .Select(ControlMappingFactory.Create)
             .ToList();
         var runtimeButtonActions = config.Buttons
-            .Select(ButtonMappingRuntimeFactory.Create)
+            .Select(x => ButtonMappingRuntimeFactory.Create(x, mediaService))
             .ToList();
             
         var audio = new WindowsAudioService();

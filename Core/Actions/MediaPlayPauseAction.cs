@@ -1,12 +1,13 @@
 ﻿using Core.Input;
 using Core.Interfaces;
 
+
 namespace Core.Actions;
 
-public class MediaPlayPauseAction : IAction
+public class MediaPlayPauseAction (IMediaService _mediaService) : IAction
 {
     public void Execute()
     {
-        MediaKeysHelper.PlayPause();
+        _mediaService.PlayPause();
     }
 }

@@ -5,21 +5,33 @@ namespace Core.Config.Implementations;
 
 public class FileConfigProvider : IConfigProvider
 {
-    private readonly string _filePath;
+    private string _filePath;
+    
+    private readonly string _fileName;
+    private readonly string _folderName;
 
-    public FileConfigProvider(string filePath)
+    public FileConfigProvider(string folderName, string fileName)
+    {
+        _fileName = fileName;
+        _folderName = folderName;
+    }
+
+    public void Init()
     {
         var dir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "SimpleDeck");
+            _folderName);
         // Todo tutaj raczej nie taki string, prędzej globalny const czy coś
         Directory.CreateDirectory(dir);
-        _filePath = Path.Combine(dir, "config.json");
+        _filePath = Path.Combine(dir, _fileName);
     }
-    
     
     public AppConfig Load()
     {
+        if (_filePath == null)
+        {
+            Init();
+        }
         if (!File.Exists(_filePath))
         {
             var defaultConfig = CreateDefault();
@@ -34,6 +46,11 @@ public class FileConfigProvider : IConfigProvider
 
     public void Save(AppConfig config)
     {
+        if (_filePath == null)
+        {
+            Init();
+        }
+        
         var json = JsonSerializer.Serialize(config, 
             new JsonSerializerOptions{WriteIndented = true});
         File.WriteAllText(_filePath, json);

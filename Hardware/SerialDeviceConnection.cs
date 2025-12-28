@@ -94,7 +94,6 @@ public class SerialDeviceConnection
     }
 
     
-
     public Task DisconnectAsync()
     {
         _serialPort?.DataReceived -= OnDataReceived;

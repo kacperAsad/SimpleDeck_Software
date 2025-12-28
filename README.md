@@ -39,3 +39,4 @@ Currently, there is no installer or .exe file to run. Check Roadmap to know more
 - [ ] 100% Test Coverage
 - [ ] Fully Automatic Installer
 - [ ] Auto-Update Function
+- [ ] Add Logger

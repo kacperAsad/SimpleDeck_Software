@@ -1,8 +1,9 @@
 ﻿using System.Runtime.InteropServices;
+using Core.Actions;
 
 namespace Core.Input;
 
-public static class MediaKeysHelper
+public class MediaKeysHelper : IMediaService
 {
     // Importujemy funkcję z systemu Windows odpowiedzialną za symulowanie klawiszy
     [DllImport("user32.dll")]
@@ -16,15 +17,35 @@ public static class MediaKeysHelper
 
     private const uint KEYEVENTF_KEYUP = 0x0002;
 
-    public static void PlayPause() => SendKey(VK_MEDIA_PLAY_PAUSE);
-    public static void Next() => SendKey(VK_MEDIA_NEXT_TRACK);
-    public static void Previous() => SendKey(VK_MEDIA_PREV_TRACK);
+    // public static void PlayPause() => SendKey(VK_MEDIA_PLAY_PAUSE);
+    // public static void Next() => SendKey(VK_MEDIA_NEXT_TRACK);
+    // public static void Previous() => SendKey(VK_MEDIA_PREV_TRACK);
 
-    private static void SendKey(byte keyCode)
+    private void SendKey(byte keyCode)
     {
         // Wciśnij klawisz
         keybd_event(keyCode, 0, 0, 0);
         // Puść klawisz
         keybd_event(keyCode, 0, KEYEVENTF_KEYUP, 0);
+    }
+
+    public void PlayPause()
+    {
+        SendKey(VK_MEDIA_PLAY_PAUSE);
+    }
+
+    public void Next()
+    {
+        SendKey(VK_MEDIA_NEXT_TRACK);
+    }
+
+    public void Previous()
+    {
+        SendKey(VK_MEDIA_PREV_TRACK);
+    }
+
+    public void Stop()
+    {
+        SendKey(VK_MEDIA_STOP);
     }
 }
