@@ -22,7 +22,10 @@ public class KeyboardShortcutAction(IKeyboardSimulator _keyboardSimulator, Actio
         if (config.Parameters.TryGetValue("keys", out var keys))
         {
             _keys = keys.Split(',')
-                .Select(s => int.Parse(s.Trim()))
+                .Select(s => s.Trim())
+                .Select(s => s.StartsWith("0x")
+                    ? Convert.ToInt32(s, 16)
+                    : int.Parse(s))
                 .ToList();
         }
     }
