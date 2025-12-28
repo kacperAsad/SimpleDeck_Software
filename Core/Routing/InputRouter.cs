@@ -7,11 +7,11 @@ namespace Core.Routing;
 public class InputRouter
 {
     private readonly IAudioService _audioService;
-    private Dictionary<string, ControlMapping> _mappings;
+    private Dictionary<string, ControlMappingRuntime> _mappings;
 
     public InputRouter(
         IAudioService audioService,
-        IEnumerable<ControlMapping> mappings)
+        IEnumerable<ControlMappingRuntime> mappings)
     {
         _audioService = audioService;
         _mappings = mappings.ToDictionary(m => m.Control);
@@ -42,7 +42,7 @@ public class InputRouter
         }
     }
 
-    public void Reload(IEnumerable<ControlMapping> mappings)
+    public void Reload(IEnumerable<ControlMappingRuntime> mappings)
     {
         _mappings = mappings.ToDictionary(m => m.Control);
     }

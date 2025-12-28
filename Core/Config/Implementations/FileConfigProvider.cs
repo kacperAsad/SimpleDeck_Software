@@ -45,25 +45,25 @@ public class FileConfigProvider : IConfigProvider
         {
             Mappings =
             {
-                new ControlMapping()
+                new ControlMappingConfig()
                 {
                     Control = "VOL1",
                     Target = "Master",
                     CurveType = "Log"
                 },
-                new ControlMapping()
+                new ControlMappingConfig()
                 {
                     Control = "VOL2",
                     Target = "Application",
                     CurveType = "Log"
                 },
-                new ControlMapping()
+                new ControlMappingConfig()
                 {
                     Control = "VOL3",
                     Target = "Application",
                     CurveType = "Log"
                 },
-                new ControlMapping()
+                new ControlMappingConfig()
                 {
                     Control = "VOL4",
                     Target = "Application",

@@ -4,5 +4,5 @@ namespace Core.Config;
 
 public class AppConfig
 {
-    public List<ControlMapping> Mappings { get; set; } = new();
+    public List<ControlMappingConfig> Mappings { get; set; } = new();
 }

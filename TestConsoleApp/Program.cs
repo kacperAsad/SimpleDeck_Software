@@ -21,11 +21,9 @@ class Program
         var config = configProvider.Load();
 
         // TUTAJ: Wzbogać mappings o AudioCurve obiekty
-        var enrichedMappings = config.Mappings.Select(mapping =>
-        {
-            mapping.AudioCurve = VolumeCurveFactory.Create(mapping.CurveType);
-            return mapping;
-        }).ToList();
+        var runtimeMappings = config.Mappings
+            .Select(ControlMappingFactory.Create)
+            .ToList();
 
 
         IDeviceConnection device = new SerialDeviceConnection(new UsbDeviceComLocatorWindows(), new SimpleDeckV1Parser());
@@ -37,7 +35,7 @@ class Program
         manager.Start();
         
         var audio = new WindowsAudioService();
-        var router = new InputRouter(audio, enrichedMappings);
+        var router = new InputRouter(audio, runtimeMappings);
 
         device.DeviceMessageReceived += (s, msg) =>
         {
