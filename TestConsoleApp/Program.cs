@@ -24,8 +24,14 @@ class Program
         var runtimeMappings = config.Mappings
             .Select(ControlMappingFactory.Create)
             .ToList();
-
-
+        var runtimeButtonActions = config.Buttons
+            .Select(ButtonMappingRuntimeFactory.Create)
+            .ToList();
+            
+        var audio = new WindowsAudioService();
+        var router = new InputRouter(audio, runtimeMappings, runtimeButtonActions);
+        
+        
         IDeviceConnection device = new SerialDeviceConnection(new UsbDeviceComLocatorWindows(), new SimpleDeckV1Parser());
 
         IUsbDeviceWatcher usbDeviceWatcher = new UsbDeviceWatcher(VID, PID);
@@ -34,8 +40,7 @@ class Program
         
         manager.Start();
         
-        var audio = new WindowsAudioService();
-        var router = new InputRouter(audio, runtimeMappings);
+        
 
         device.DeviceMessageReceived += (s, msg) =>
         {

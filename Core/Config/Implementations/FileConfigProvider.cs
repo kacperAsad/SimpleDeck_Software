@@ -69,6 +69,50 @@ public class FileConfigProvider : IConfigProvider
                     Target = "Application",
                     CurveType = "Log"
                 },
+            },
+            Buttons =
+            {
+                new ButtonMappingConfig()
+                {
+                    ControlId = "BTN1",
+                    Action = new ActionConfig()
+                    {
+                        Type = "Play_Pause_Action",
+                        Parameters =  new Dictionary<string, string>()
+                    }
+                },
+                new ButtonMappingConfig()
+                {
+                    ControlId = "BTN2",
+                    Action = new ActionConfig()
+                    {
+                        Type = "Previous_Action",
+                        Parameters =  new Dictionary<string, string>()
+                    }
+                },
+                new ButtonMappingConfig()
+                {
+                    ControlId = "BTN3",
+                    Action = new ActionConfig()
+                    {
+                        Type = "Next_Action",
+                        Parameters =  new Dictionary<string, string>()
+                    }
+                    
+                },
+                new ButtonMappingConfig()
+                {
+                    ControlId = "BTN4",
+                    Action = new ActionConfig()
+                    {
+                        Type = "Open_App_Action",
+                        Parameters =  new Dictionary<string, string>()
+                        {
+                            { "path", "calc.exe" }
+                        }
+                    }
+                }
+                
             }
         };
     }
