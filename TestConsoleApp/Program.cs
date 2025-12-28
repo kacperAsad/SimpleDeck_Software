@@ -22,23 +22,21 @@ class Program
         configProvider.Init();
         var config = configProvider.Load();
 
+        var audio = new WindowsAudioService();
         IMediaService mediaService = new MediaKeysHelper();
-        // TUTAJ: Wzbogać mappings o AudioCurve obiekty
+
         var runtimeMappings = config.Mappings
             .Select(ControlMappingFactory.Create)
             .ToList();
         var runtimeButtonActions = config.Buttons
-            .Select(x => ButtonMappingRuntimeFactory.Create(x, mediaService))
+            .Select(x => ButtonMappingRuntimeFactory.Create(x, mediaService, audio))
             .ToList();
-            
-        var audio = new WindowsAudioService();
+        
         var router = new InputRouter(audio, runtimeMappings, runtimeButtonActions);
         
         
         IDeviceConnection device = new SerialDeviceConnection(new UsbDeviceComLocatorWindows(), new SimpleDeckV1Parser());
-
         IUsbDeviceWatcher usbDeviceWatcher = new UsbDeviceWatcher(VID, PID);
-
         DeviceConnectionManager manager = new DeviceConnectionManager(usbDeviceWatcher, device);
         
         manager.Start();

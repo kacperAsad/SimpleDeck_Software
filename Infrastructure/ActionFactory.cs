@@ -7,14 +7,18 @@ namespace Infrastructure;
 
 public static class ActionFactory
 {
-    public static IAction Create(ActionConfig actionConfig, IMediaService mediaService)
+    public static IAction Create(ActionConfig actionConfig, IMediaService mediaService, IAudioService audioService)
     {
         return actionConfig.Type switch
         {
             ActionType.PlayPause => new MediaPlayPauseAction(mediaService),
             ActionType.PreviousTrack => new MediaPreviousAction(mediaService),
             ActionType.NextTrack => new MediaNextAction(mediaService),
+            ActionType.Stop => new MediaStopAction(mediaService),
             ActionType.OpenApp => new SystemOpenAppAction(actionConfig),
+            ActionType.MuteApp => new MediaMuteAppAction(actionConfig, audioService),
+            ActionType.MuteMicrophone => new MuteGlobalMicrophoneAction(audioService),
+            
             _ => throw new NotSupportedException(actionConfig.Type.ToString())
         };
     }

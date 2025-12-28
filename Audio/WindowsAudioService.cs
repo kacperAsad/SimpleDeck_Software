@@ -8,12 +8,14 @@ public class WindowsAudioService : IAudioService
 {
 
     private readonly MMDevice _device;
+    private readonly MMDevice _microphoneDevice;
 
     public WindowsAudioService()
     {
         var enumerator = new MMDeviceEnumerator();
         
         _device = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+        _microphoneDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Capture, Role.Communications);
     }
     
     public void SetApplicationVolume(string processName, float volume)
@@ -87,6 +89,18 @@ public class WindowsAudioService : IAudioService
             {
                 // ignored
             }
+        }
+    }
+
+    public void ToggleGlobalMicrophoneMute(bool? mute = null)
+    {
+        if (mute == null)
+        {
+            _microphoneDevice.AudioEndpointVolume.Mute = !_microphoneDevice.AudioEndpointVolume.Mute;
+        }
+        else
+        {
+            _microphoneDevice.AudioEndpointVolume.Mute = mute.Value;
         }
     }
 }

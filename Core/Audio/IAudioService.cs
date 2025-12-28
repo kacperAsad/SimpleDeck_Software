@@ -8,4 +8,6 @@ public interface IAudioService
     float GetMasterVolume();
 
     void ToggleApplicationMute(string processName, bool? mute = null);
+
+    public void ToggleGlobalMicrophoneMute(bool? mute = null);
 }

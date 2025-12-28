@@ -9,6 +9,6 @@ public enum ActionType
     PreviousTrack,
     OpenApp,
     MuteApp,
-    KeyShortcut
+    MuteMicrophone,
     
 }

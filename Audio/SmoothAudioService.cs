@@ -73,6 +73,11 @@ public class SmoothAudioService : IAudioService, IDisposable
         throw  new NotImplementedException();
     }
 
+    public void ToggleGlobalMicrophoneMute(bool? mute = null)
+    {
+        throw  new NotImplementedException();
+    }
+
     private void Update(object? state)
     {
         lock (_lock)

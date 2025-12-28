@@ -6,4 +6,6 @@ public interface IMediaService
     void Next();
     void Previous();
     void Stop();
+    
+    
 }
