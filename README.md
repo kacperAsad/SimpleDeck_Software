@@ -1,5 +1,7 @@
 ﻿# Simple Deck
 
+[![.NET](https://github.com/kacperAsad/SimpleDeck_Software/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kacperAsad/SimpleDeck_Software/actions/workflows/dotnet.yml)
+
 An audio control panel built with **.NET 10** and **WPF**, designed to interface with a custom **STM32-based** microcontroller platform.
 
 ## Table of Contents

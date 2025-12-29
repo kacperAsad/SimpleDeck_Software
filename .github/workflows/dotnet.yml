@@ -8,7 +8,7 @@ on:
     
     
 jobs:
-  build-and-test:
+  windows-build-and-test:
     runs-on: windows-latest
     
     steps:
@@ -23,7 +23,7 @@ jobs:
         run: dotnet restore SimpleDeck_Software.sln
         
       - name: Build
-        run: dotnet build SimpleDeck_Software.sln
+        run: dotnet build SimpleDeck_Software.sln --configuration Release --no-restore
         
       - name: Run Tests
         run: dotnet test SimpleDeck_Software.sln --configuration Release --no-build --verbosity normal
