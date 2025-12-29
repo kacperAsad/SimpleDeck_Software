@@ -40,11 +40,11 @@ jobs:
             -p:IncludeNativeLibrariesForSelfExtract=true `
             -o SimpleDeck_Windows_App/bin/Release/net10.0/win-x64/publish
       
-      # KROK Z INSTALATOREM (Inno Setup jest preinstalowany na GitHub Actions)
+      
       - name: Compile Installer
         run: |
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer_script.iss
-        continue-on-error: true # Jeśli nie stworzyłeś pliku .iss, workflow pójdzie dalej
+        continue-on-error: true 
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
