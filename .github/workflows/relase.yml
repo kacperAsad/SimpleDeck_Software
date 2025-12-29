@@ -2,6 +2,11 @@
 
 on:
   workflow_dispatch: 
+    inputs: 
+      version:
+        description: "Version Number (ex. v0.0.1)"
+        required: true
+        default: "v0.0.1"
   push:
     tags:
       - 'v*' 
@@ -44,8 +49,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.event.inputs.version || github.ref_name }}
+          name: Release ${{ github.event.inputs.version || github.ref_name }}
           draft: false
           prerelease: false
           files: |
