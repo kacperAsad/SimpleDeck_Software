@@ -1,4 +1,6 @@
-﻿using Hardware;
+﻿using System.Collections;
+using Core;
+using Hardware;
 using Xunit.Abstractions;
 
 namespace Tests.Parsers;
@@ -94,10 +96,18 @@ public class SimpleDeckV1ParserTests
         
     }
 
-    [Fact]
-    public void Parse_InvalidData_ReturnsEmptyList()
+    [Theory]
+    [InlineData("a:b:c:d:e:f:g:h")]
+    [InlineData("alfa")]
+    [InlineData("test1:test2")]
+    [InlineData("12:test3:test4")]
+    [InlineData("12:test4:test5:12")]
+    [InlineData("12:12:12:12:1:1:1:k")]
+    [InlineData("12:12:12:12:12:1:1:1;")]
+    [InlineData("12:12:12:12:12:1;1:1")]
+    public void Parse_InvalidData_ReturnsEmptyList(string data)
     {
-        string firstLine = "a:b:c:d:e:f:g:h";
+        string firstLine = data;
         
         var result = _parser.Parse(firstLine).ToList();
         

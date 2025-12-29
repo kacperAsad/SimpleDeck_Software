@@ -38,7 +38,7 @@ public class SimpleDeckV1Parser : IDeviceProtocolParser
         {
             int difference = Math.Abs(integerValues[i] - _lastData[i]);
 
-            if (difference > 1)
+            if (difference > 1 || integerValues[i] == 0 )
             {
                 _lastData[i] = integerValues[i];
                 yield return new DeviceMessage($"VOL{i + 1}", (100 - integerValues[i]));
