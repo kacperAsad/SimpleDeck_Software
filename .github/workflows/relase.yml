@@ -1,0 +1,53 @@
+﻿name: Build and Release
+
+on:
+  workflow_dispatch: 
+  push:
+    tags:
+      - 'v*' 
+
+jobs:
+  windows-release:
+    runs-on: windows-latest
+    permissions:
+      contents: write 
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore SimpleDeck_Software.sln
+
+      - name: Publish (Single EXE)
+
+        run: |
+          dotnet publish SimpleDeck_Windows_App/SimpleDeck_Windows_App.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:PublishReadyToRun=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -o SimpleDeck_Windows_App/bin/Release/net10.0/win-x64/publish
+      
+      # KROK Z INSTALATOREM (Inno Setup jest preinstalowany na GitHub Actions)
+      - name: Compile Installer
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer_script.iss
+        continue-on-error: true # Jeśli nie stworzyłeś pliku .iss, workflow pójdzie dalej
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: |
+            SimpleDeck_Windows_App/bin/Release/net10.0/win-x64/publish/SimpleDeck_Windows_App.exe
+            installer_output/SimpleDeck_Setup.exe
