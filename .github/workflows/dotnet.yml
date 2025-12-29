@@ -1,0 +1,29 @@
+﻿name: .NET 
+
+on:
+  push: 
+    branches: [ "main" ]
+  pull_request: 
+    branches: [ "main" ]
+    
+    
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      
+      - name: Restore dependencies
+        run: dotnet restore SimpleDeck_Software.sln
+        
+      - name: Build
+        run: dotnet build SimpleDeck_Software.sln
+        
+      - name: Run Tests
+        run: dotnet test SimpleDeck_Software.sln --configuration Release --no-build --verbosity normal
