@@ -4,7 +4,7 @@ AppVersion=1.0
 DefaultDirName={autopf}\SimpleDeck
 DefaultGroupName=SimpleDeck
 OutputDir=.\installer_output
-OutputBaseFilename=SimpleDeck_Setup
+OutputBaseFilename=SimpleDeck_Installer
 Compression=lzma
 SolidCompression=yes
 

@@ -13,7 +13,8 @@ public class ControlMappingFactory
             config.Control,
             config.Target,
             config.Process,
-            curve
+            curve,
+            config.GroupName
         );
     }
 }

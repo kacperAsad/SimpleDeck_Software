@@ -4,6 +4,7 @@ using Core.Config.Implementations;
 using Core.Input;
 using Core.Interfaces;
 using Core.Routing;
+using Core.Services;
 using Hardware;
 using Hardware.Implementations;
 using Hardware.Interfaces;
@@ -25,7 +26,9 @@ class Program
         var audio = new WindowsAudioService();
         IMediaService mediaService = new MediaKeysHelper();
         IKeyboardSimulator keyboardSimulator = new WindowsKeyboardSimulator();
-
+        ProcessResolver processResolver = new ProcessResolver(audio);
+        
+        
         var runtimeMappings = config.Mappings
             .Select(ControlMappingFactory.Create)
             .ToList();
@@ -33,7 +36,7 @@ class Program
             .Select(x => ButtonMappingRuntimeFactory.Create(x, mediaService, audio, keyboardSimulator))
             .ToList();
         
-        var router = new InputRouter(audio, runtimeMappings, runtimeButtonActions);
+        var router = new InputRouter(audio, processResolver, runtimeMappings, runtimeButtonActions, config.AppGroups);
         
         
         IDeviceConnection device = new SerialDeviceConnection(new UsbDeviceComLocatorWindows(), new SimpleDeckV1Parser());

@@ -2,19 +2,11 @@
 
 namespace Core.Routing;
 
-public class ControlMappingRuntime
+public class ControlMappingRuntime(string control, PotentiometerTarget target, string? process, IAudioCurve audioCurve, string? group = null)
 {
-    public string Control { get; }
-    public string Target { get; }
-    public string? Process { get; }
-    public IAudioCurve AudioCurve { get; }
-
-    public ControlMappingRuntime(string control, string target, string? process, IAudioCurve audioCurve)
-    {
-        Control = control;
-        Target = target;
-        Process = process;
-        AudioCurve = audioCurve;
-    }
-    
+    public string Control { get; } = control;
+    public PotentiometerTarget Target { get; } = target;
+    public string? Process { get; } = process;
+    public IAudioCurve AudioCurve { get; } = audioCurve;
+    public string? Group { get; set; } = group;
 }

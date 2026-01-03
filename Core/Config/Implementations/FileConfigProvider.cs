@@ -65,25 +65,28 @@ public class FileConfigProvider : IConfigProvider
                 new ControlMappingConfig()
                 {
                     Control = "VOL1",
-                    Target = "Master",
+                    Target = PotentiometerTarget.Master,
                     CurveType = "Log"
                 },
                 new ControlMappingConfig()
                 {
                     Control = "VOL2",
-                    Target = "Application",
+                    Target = PotentiometerTarget.Application,
+                    Process = "Youtube Music",
                     CurveType = "Log"
                 },
                 new ControlMappingConfig()
                 {
                     Control = "VOL3",
-                    Target = "Application",
+                    Target = PotentiometerTarget.Application,
+                    Process = "firefox",
                     CurveType = "Log"
                 },
                 new ControlMappingConfig()
                 {
                     Control = "VOL4",
-                    Target = "Application",
+                    Target = PotentiometerTarget.Group,
+                    GroupName = "Games",
                     CurveType = "Log"
                 },
             },
@@ -130,6 +133,18 @@ public class FileConfigProvider : IConfigProvider
                     }
                 }
                 
+            },
+            AppGroups =
+            {
+                new AppGroupConfig()
+                {
+                    Name = "Games",
+                    Processes =
+                    [
+                        "minecraft",
+                        "factorio"
+                    ]
+                }
             }
         };
     }
